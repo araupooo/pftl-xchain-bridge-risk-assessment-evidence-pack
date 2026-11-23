@@ -1,0 +1,44 @@
+{
+ "http_status": 200,
+ "method": "account_info",
+ "params": {
+  "account": "r4vhrMChCsaoFsBoCkRTRGUuc1njfr7bmA",
+  "ledger_index": "validated"
+ },
+ "probed_at_utc": "2026-11-23T03:30:56Z",
+ "response": {
+  "result": {
+   "account_data": {
+    "Account": "r4vhrMChCsaoFsBoCkRTRGUuc1njfr7bmA",
+    "Balance": "96999999999999880",
+    "Flags": 0,
+    "LedgerEntryType": "AccountRoot",
+    "OwnerCount": 0,
+    "PreviousTxnID": "D3955D91958CF5B0C9B98C9401F140EB4D49F6B393102AFF9514E8A5EDF6B7C8",
+    "PreviousTxnLgrSeq": 1527144,
+    "Sequence": 13,
+    "index": "E8090C29C5FF14FF70011AA8085882EBC71DAD1AA6030516ED1B38F9DDA918CA"
+   },
+   "account_flags": {
+    "allowTrustLineClawback": false,
+    "defaultRipple": false,
+    "depositAuth": false,
+    "disableMasterKey": false,
+    "disallowIncomingCheck": false,
+    "disallowIncomingNFTokenOffer": false,
+    "disallowIncomingPayChan": false,
+    "disallowIncomingTrustline": false,
+    "disallowIncomingXRP": false,
+    "globalFreeze": false,
+    "noFreeze": false,
+    "passwordSpent": false,
+    "requireAuthorization": false,
+    "requireDestinationTag": false
+   },
+   "ledger_hash": "93F18A5EA99DEBDF3180749FB45E0CAEB5F8EE89FA76BE1F4EF593F1E955ABCC",
+   "ledger_index": 8287773,
+   "status": "success",
+   "validated": true
+  }
+ }
+}

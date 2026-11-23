@@ -1,0 +1,26 @@
+{
+ "http_status": 200,
+ "method": "account_info",
+ "params": {
+  "account": "r9cZA1mLK5R5Am25ArfXFmqgNwjZgnfk59",
+  "ledger_index": "validated"
+ },
+ "probed_at_utc": "2026-11-23T03:30:58Z",
+ "response": {
+  "result": {
+   "account": "r9cZA1mLK5R5Am25ArfXFmqgNwjZgnfk59",
+   "error": "actNotFound",
+   "error_code": 19,
+   "error_message": "Account not found.",
+   "ledger_hash": "93F18A5EA99DEBDF3180749FB45E0CAEB5F8EE89FA76BE1F4EF593F1E955ABCC",
+   "ledger_index": 8287773,
+   "request": {
+    "account": "r9cZA1mLK5R5Am25ArfXFmqgNwjZgnfk59",
+    "command": "account_info",
+    "ledger_index": "validated"
+   },
+   "status": "error",
+   "validated": true
+  }
+ }
+}

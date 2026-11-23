@@ -1,0 +1,16 @@
+PASS build version unchanged: shipped=1.0.9 fresh=1.0.9
+PASS network id unchanged: network_id=2025
+PASS validated ledger advanced: shipped 8287770 -> fresh 8288058
+PASS complete-ledgers floor unchanged: floor=8200054
+PASS quorum unchanged: quorum=17
+PASS validator-list sequence unchanged: VL sequence=30
+PASS validator-list validators unchanged: validators=25
+PASS XChainBridge still disabled: fresh={'XChainBridge': {'enabled': False, 'supported': True}, 'fixXChainRewardRounding': {'enabled': False, 'supported': True}} shipped={'XChainBridge': {'enabled': False, 'supported': True}, 'fixXChainRewardRounding': {'enabled': False, 'supported': True}}
+PASS fixXChainRewardRounding still disabled: both runs report fixXChainRewardRounding disabled
+PASS genesis account still exists with same balance: balance=96999999999999880
+PASS masterpassphrase root still absent: error=actNotFound
+PASS fabricated bridge still entryNotFound: error=entryNotFound
+PASS drill pass counts equal: fresh 24/24, shipped 24/24
+PASS drill case ids identical: 24 case ids match in order
+PASS fresh-clone cadence sane: 2.924 s/ledger
+15/15 compare checks PASS

@@ -1,0 +1,42 @@
+{
+ "http_status": 200,
+ "method": "ledger_entry",
+ "params": {
+  "bridge": {
+   "IssuingChainDoor": "r9cZA1mLK5R5Am25ArfXFmqgNwjZgnfk59",
+   "IssuingChainIssue": {
+    "currency": "XRP"
+   },
+   "LockingChainDoor": "r4vhrMChCsaoFsBoCkRTRGUuc1njfr7bmA",
+   "LockingChainIssue": {
+    "currency": "XRP"
+   }
+  },
+  "bridge_account": "r4vhrMChCsaoFsBoCkRTRGUuc1njfr7bmA",
+  "ledger_index": "validated"
+ },
+ "probed_at_utc": "2026-11-23T03:31:01Z",
+ "response": {
+  "result": {
+   "error": "entryNotFound",
+   "error_code": 98,
+   "error_message": "Entry not found.",
+   "request": {
+    "bridge": {
+     "IssuingChainDoor": "r9cZA1mLK5R5Am25ArfXFmqgNwjZgnfk59",
+     "IssuingChainIssue": {
+      "currency": "XRP"
+     },
+     "LockingChainDoor": "r4vhrMChCsaoFsBoCkRTRGUuc1njfr7bmA",
+     "LockingChainIssue": {
+      "currency": "XRP"
+     }
+    },
+    "bridge_account": "r4vhrMChCsaoFsBoCkRTRGUuc1njfr7bmA",
+    "command": "ledger_entry",
+    "ledger_index": "validated"
+   },
+   "status": "error"
+  }
+ }
+}
