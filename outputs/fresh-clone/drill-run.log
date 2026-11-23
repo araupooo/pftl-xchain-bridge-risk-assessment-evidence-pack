@@ -1,0 +1,31 @@
+--- Drill A: attestation replay must not double-count ---
+PASS A-01 single attestation, no quorum: weight 0 < quorum 5 -> tecXCHAIN_CLAIM_NO_QUORUM (0.01 ms)
+PASS A-02 three distinct signers reach quorum: 3 distinct signers, weight 2+2+1=5 >= quorum 5 -> quorum, 3 reward accounts (0.05 ms)
+PASS A-03 replayed attestation does not double-count: same signer attests twice -> still 1 entry, weight 2 < 5, no quorum (0.03 ms)
+PASS A-04 re-attestation with larger amount replaces: re-attestation with larger amount replaces old one (set stays 1), weight still 2 (0.02 ms)
+PASS A-05 non-signer attestation rejected and erased: non-signer attestation rejected (tecNO_PERMISSION) and erased before quorum math (0.01 ms)
+PASS A-06 destination checked on add, ignored on claim: dst mismatch: excluded on add-attestation path, ignored on claim path (0.04 ms)
+PASS A-07 removed signer attestation erased: signer removed from list -> its attestation erased, weight 4 < 5, no quorum (0.02 ms)
+PASS A-08 weighted quorum boundary: weighted quorum: 2+2=4 no quorum, +1 = 5 quorum (0.03 ms)
+--- Drill A wall: 0.32 ms ---
+--- Drill B: quorum threshold and claim-id counter ---
+PASS B-01 empty attestation set: 0 attestations -> tecXCHAIN_CLAIM_NO_QUORUM (0.0 ms)
+PASS B-02 weight one below quorum: weight 4 = quorum-1 -> no quorum (0.02 ms)
+PASS B-03 weight exactly quorum: weight exactly 5 = quorum -> quorum (weight >= quorum) (0.02 ms)
+PASS B-04 weight above quorum, rewards listed: weight 9 > quorum 5 -> quorum, reward accounts = the 3 attesters (0.02 ms)
+PASS B-05 amount mismatch blocks claim: attestations for 1,000,000 do not match a claim for 2,000,000 -> no quorum (0.02 ms)
+PASS B-06 chain-direction mismatch blocks claim: locking-send attestations do not match an issuing-send claim -> no quorum (0.02 ms)
+PASS B-07 claim-id counter advances, overflow guarded: claim ids advance 1,2,3; counter at 2^32-1 wraps to 0 -> tecINTERNAL (0.01 ms)
+--- Drill B wall: 0.15 ms ---
+--- Drill C: malformed bridge-account rejection ---
+PASS C-01 equal door accounts rejected: equal door accounts -> temXCHAIN_EQUAL_DOOR_ACCOUNTS (0.0 ms)
+PASS C-02 non-door submitter rejected: submitter is neither door -> temXCHAIN_BRIDGE_NONDOOR_OWNER (0.02 ms)
+PASS C-03 mixed XRP/IOU issues rejected: locking XRP vs issuing IOU -> temXCHAIN_BRIDGE_BAD_ISSUES (0.0 ms)
+PASS C-04 bad signature reward rejected: negative reward and non-XRP reward -> temXCHAIN_BRIDGE_BAD_REWARD_AMOUNT (0.0 ms)
+PASS C-05 bad min-account-create amount rejected: non-XRP and zero min-account-create amount -> temXCHAIN_BRIDGE_BAD_MIN_ACCOUNT_CREATE_AMOUNT (0.0 ms)
+PASS C-06 non-root XRP issuing door rejected: XRP issuing door that is not the root account -> temXCHAIN_BRIDGE_BAD_ISSUES (0.0 ms)
+PASS C-07 self-locking door rejected: locking door locking its own asset -> temXCHAIN_BRIDGE_BAD_ISSUES (0.0 ms)
+PASS C-08 bad public-key type rejected: attestation with unknown public-key type -> temMALFORMED (0.01 ms)
+PASS C-09 bad attestation proof rejected: zero amount, wrong issue, bad signature -> temXCHAIN_BAD_PROOF (0.02 ms)
+--- Drill C wall: 0.15 ms ---
+TOTAL: 24/24 PASS (wall 0.65 ms)

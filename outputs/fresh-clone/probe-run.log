@@ -1,0 +1,32 @@
+[2026-11-23T03:45:15Z] probe start — read-only RPC + public GETs only; no transactions, no bridge interaction, no peer connections
+[2026-11-23T03:45:17Z] rpc server_info [server_info] -> HTTP 200 (saved outputs/fresh-clone/rpc-server_info.json)
+[2026-11-23T03:45:19Z] rpc ledger_current [ledger_current] -> HTTP 200 (saved outputs/fresh-clone/rpc-ledger_current.json)
+[2026-11-23T03:45:20Z] rpc ledger_closed [ledger_closed] -> HTTP 200 (saved outputs/fresh-clone/rpc-ledger_closed.json)
+[2026-11-23T03:45:22Z] rpc fee [fee] -> HTTP 200 (saved outputs/fresh-clone/rpc-fee.json)
+[2026-11-23T03:45:23Z] rpc feature [feature] -> HTTP 200 (saved outputs/fresh-clone/rpc-feature.json)
+[2026-11-23T03:45:25Z] rpc account_info [account_info-genesis] -> HTTP 200 (saved outputs/fresh-clone/rpc-account_info-genesis.json)
+[2026-11-23T03:45:26Z] rpc account_info [account_info-xrpl-root] -> HTTP 200 (saved outputs/fresh-clone/rpc-account_info-xrpl-root.json)
+[2026-11-23T03:45:28Z] rpc account_objects [account_objects-genesis] -> HTTP 200 (saved outputs/fresh-clone/rpc-account_objects-genesis.json)
+[2026-11-23T03:45:29Z] rpc ledger_entry [ledger_entry-bridge-genesis] -> HTTP 200 (saved outputs/fresh-clone/rpc-ledger_entry-bridge-genesis.json)
+[2026-11-23T03:45:30Z] GET https://postfiat.org/testnet_vl.json -> HTTP 200, 14781 bytes (saved outputs/fresh-clone/testnet_vl.json)
+[2026-11-23T03:45:31Z] GET https://vhs.testnet.postfiat.org/v1/network/amendments/info -> HTTP 200, 14554 bytes (saved outputs/fresh-clone/vhs-amendments-info.json)
+[2026-11-23T03:45:32Z] GET https://postfiat.org/pfusdc-trustless-bridge/ -> HTTP 200, 68866 bytes (saved outputs/fresh-clone/postfiat-pfusdc-bridge.html)
+[2026-11-23T03:45:33Z] GET https://explorer.testnet.postfiat.org/ -> HTTP 200
+[2026-11-23T03:45:34Z] GET https://explorer.testnet.postfiat.org/health -> HTTP 200
+[2026-11-23T03:45:34Z] GET https://explorer.postfiat.org/ -> HTTP None
+[2026-11-23T03:45:35Z] cadence start: ledger_current_index=8288065
+[2026-11-23T03:46:37Z] cadence: 8288065 -> 8288086 in 61.4 s (2.924 s/ledger)
+[2026-11-23T03:46:37Z] probe summary written: {"build_version": "1.0.9", "cadence": {"elapsed_seconds": 61.4, "end_seq": 8288086, "ledgers": 21, "seconds_per_ledger": 2.924, "start_seq": 8288065}, "complete_ledgers": "8200054-8288058", "explorer": {"https://explorer.postfiat.org/": {"body_head": "<urlopen error Remote end closed connection without response>", "http_status": null}, "https://explorer.testnet.postfiat.org/": {"body_head": "<!doctype html><html lang=\"en\"><head><meta charset=\"utf-8\"><meta name=\"viewport\" content=\"width=device-width,initial-scale=1,shrink-to-fit=no\"><meta name=\"theme-color\" content=\"#ffffff\"><meta name=\"ap", "http_status": 200}, "https://explorer.testnet.postfiat.org/health": {"body_head": "<!doctype html><html lang=\"en\"><head><meta charset=\"utf-8\"><meta name=\"viewport\" content=\"width=device-width,initial-scale=1,shrink-to-fit=no\"><meta name=\"theme-color\" content=\"#ffffff\"><meta name=\"ap", "http_status": 200}}, "fabricated_bridge_ledger_entry": {"error": "entryNotFound", "error_code": 98}, "feature_enabled": 64, "feature_entries": 101, "genesis_account": {"account": "r4vhrMChCsaoFsBoCkRTRGUuc1njfr7bmA", "balance_drops": "96999999999999880", "exists": true, "flags": 0, "sequence": 13}, "genesis_account_objects": {"count": 0, "ledger_index": 8288062, "types": {}}, "hostid": "MUFF", "io_latency_ms": 1, "ledger_current_index": 8288060, "load_factor": 1, "network_id": 2025, "peer_disconnects": "103", "peers": 21, "pfusdc_page": {"bytes": 68866, "http_status": 200, "sha256": "d3c0bcb7c6b751ea094a0fc59a8dccfd97fd6c5b3508072900ec1911927b1e8c"}, "probed_at_utc": "2026-11-23T03:46:37Z", "rpc_calls": 17, "rpc_endpoint": "https://rpc.testnet.postfiat.org/", "server_state": "full", "validated_ledger_age": 3, "validated_ledger_seq": 8288058, "validation_quorum": 17, "validator_list": {"blob_bytes_decoded": 10652, "blob_effective": 848261408, "blob_expiration": 891447293, "blob_sequence": 30, "bytes": 14781, "format": "v2 (blobs_v2)", "http_status": 200, "manifest_chars": 288, "publisher_key": "ED3F1E0DA736FCF99BE2880A60DBD470715C0E04DD793FB862236B070571FC09E2", "signature_chars": 140, "validators_in_blob": 25}, "vhs_amendments_info": {"XChainBridge": {"deprecated": false, "id": "C98D98EE9616ACD36E81FDEB8D41D349BF5F1B41DD64A0ABC1FE9AA5EA267E9C"}, "bytes": 14554, "count": 103, "fixXChainRewardRounding": {"deprecated": false, "id": "2BF037D90E1B676B17592A8AF55E88DB465398B4B597AE46EECEE1399AB05699"}, "http_status": 200}, "xchain_amendments": {"XChainBridge": {"enabled": false, "supported": true}, "fixXChainRewardRounding": {"enabled": false, "supported": true}}, "xrpl_root_account": {"account": "r9cZA1mLK5R5Am25ArfXFmqgNwjZgnfk59", "error": "actNotFound", "error_code": 19, "exists": false}}
+[2026-11-23T03:46:37Z] probe end — 17 HTTP calls total (RPC + GETs)
+  sha256 96338dfdc0a650d8ccc5be6c3b146226ed45528b9938ec859c845011b82e701e  rpc-account_info-genesis.json
+  sha256 741140ec19c8c5f68fb3d0d6a8a5f9f51df2f633ff7d725f3c975981812c27c5  rpc-account_info-xrpl-root.json
+  sha256 e5e90940f7b20bca2e89eb4723c202deb378e89d7f667891ea4e556f7d06e144  rpc-account_objects-genesis.json
+  sha256 ef07f7f99bc1c5ae5f7c9458b318d915ad7302382885e5106f9c9780d93529e3  rpc-feature.json
+  sha256 601af4213a41cbdae35e8082d5f523d13220814824d975ec3b15305766b8d877  rpc-fee.json
+  sha256 0b4c1f23d9e33f4ff47a262dacead59a280cf8326919de35817ce275fbe9e5c2  rpc-ledger_closed.json
+  sha256 5ce2e0390903a2e0ab1c9a374b95567fc3ad163397e6abbbd69b39164dfdb3fe  rpc-ledger_current.json
+  sha256 17285af1fd2ea07477a823fe44d8033409cbe2bd50db2e7b737d5a78a255c3cb  rpc-ledger_entry-bridge-genesis.json
+  sha256 5f6a742c733076ccebb5969981f30e96cd1e877ec4fbbd6fe78d116a18ae8bcf  rpc-server_info.json
+  sha256 15507709818ae1193453f8f47bbd922c7d4b8541fad471d3a83ab148a867ba64  source-hashes.json
+  sha256 5d4f5a18a18fead4105e5dc00cf7e11a71b9be4bc140357d1b4ea12116df59e7  testnet_vl.json
+  sha256 681c4d249974394e2524b9665577a34fa6dfa905825f827d6184ac26b8b6c6da  vhs-amendments-info.json

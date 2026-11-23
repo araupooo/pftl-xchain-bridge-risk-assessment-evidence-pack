@@ -1,0 +1,19 @@
+{
+ "http_status": 200,
+ "method": "account_objects",
+ "params": {
+  "account": "r4vhrMChCsaoFsBoCkRTRGUuc1njfr7bmA",
+  "ledger_index": "validated"
+ },
+ "probed_at_utc": "2026-11-23T03:45:28Z",
+ "response": {
+  "result": {
+   "account": "r4vhrMChCsaoFsBoCkRTRGUuc1njfr7bmA",
+   "account_objects": [],
+   "ledger_hash": "8874FF2651BCFB04F4FAFA8706639CC408156AA4B36DFF97D2E6D762B0FD38E9",
+   "ledger_index": 8288062,
+   "status": "success",
+   "validated": true
+  }
+ }
+}
