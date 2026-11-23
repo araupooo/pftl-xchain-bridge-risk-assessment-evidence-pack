@@ -1,0 +1,56 @@
+// Source: postfiatorg/postfiatd @ 0085a1ff885d6a446369cf73a4430f75af22be55
+// File: src/xrpld/app/tx/detail/XChainBridge.cpp
+// Lines: 1448-1498
+// Verbatim excerpt; line numbers verified with grep -n on the pinned checkout.
+
+TER
+XChainCreateBridge::preclaim(PreclaimContext const& ctx)
+{
+    auto const account = ctx.tx[sfAccount];
+    auto const bridgeSpec = ctx.tx[sfXChainBridge];
+    STXChainBridge::ChainType const chainType =
+        STXChainBridge::srcChain(account == bridgeSpec.lockingChainDoor());
+
+    {
+        auto hasBridge = [&](STXChainBridge::ChainType ct) -> bool {
+            return ctx.view.exists(keylet::bridge(bridgeSpec, ct));
+        };
+
+        if (hasBridge(STXChainBridge::ChainType::issuing) ||
+            hasBridge(STXChainBridge::ChainType::locking))
+        {
+            return tecDUPLICATE;
+        }
+    }
+
+    if (!isXRP(bridgeSpec.issue(chainType)))
+    {
+        auto const sleIssuer =
+            ctx.view.read(keylet::account(bridgeSpec.issue(chainType).account));
+
+        if (!sleIssuer)
+            return tecNO_ISSUER;
+
+        // Allowing clawing back funds would break the bridge's invariant that
+        // wrapped funds are always backed by locked funds
+        if (sleIssuer->getFlags() & lsfAllowTrustLineClawback)
+            return tecNO_PERMISSION;
+    }
+
+    {
+        // Check reserve
+        auto const sleAcc = ctx.view.read(keylet::account(account));
+        if (!sleAcc)
+            return terNO_ACCOUNT;
+
+        auto const balance = (*sleAcc)[sfBalance];
+        auto const reserve =
+            ctx.view.fees().accountReserve((*sleAcc)[sfOwnerCount] + 1);
+
+        if (balance < reserve)
+            return tecINSUFFICIENT_RESERVE;
+    }
+
+    return tesSUCCESS;
+}
+

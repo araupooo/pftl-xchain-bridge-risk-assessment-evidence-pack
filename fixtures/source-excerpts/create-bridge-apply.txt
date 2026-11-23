@@ -1,0 +1,50 @@
+// Source: postfiatorg/postfiatd @ 0085a1ff885d6a446369cf73a4430f75af22be55
+// File: src/xrpld/app/tx/detail/XChainBridge.cpp
+// Lines: 1500-1544
+// Verbatim excerpt; line numbers verified with grep -n on the pinned checkout.
+
+XChainCreateBridge::doApply()
+{
+    auto const account = ctx_.tx[sfAccount];
+    auto const bridgeSpec = ctx_.tx[sfXChainBridge];
+    auto const reward = ctx_.tx[sfSignatureReward];
+    auto const minAccountCreate = ctx_.tx[~sfMinAccountCreateAmount];
+
+    auto const sleAcct = ctx_.view().peek(keylet::account(account));
+    if (!sleAcct)
+        return tecINTERNAL;  // LCOV_EXCL_LINE
+
+    STXChainBridge::ChainType const chainType =
+        STXChainBridge::srcChain(account == bridgeSpec.lockingChainDoor());
+
+    Keylet const bridgeKeylet = keylet::bridge(bridgeSpec, chainType);
+    auto const sleBridge = std::make_shared<SLE>(bridgeKeylet);
+
+    (*sleBridge)[sfAccount] = account;
+    (*sleBridge)[sfSignatureReward] = reward;
+    if (minAccountCreate)
+        (*sleBridge)[sfMinAccountCreateAmount] = *minAccountCreate;
+    (*sleBridge)[sfXChainBridge] = bridgeSpec;
+    (*sleBridge)[sfXChainClaimID] = 0;
+    (*sleBridge)[sfXChainAccountCreateCount] = 0;
+    (*sleBridge)[sfXChainAccountClaimCount] = 0;
+
+    // Add to owner directory
+    {
+        auto const page = ctx_.view().dirInsert(
+            keylet::ownerDir(account), bridgeKeylet, describeOwnerDir(account));
+        if (!page)
+            return tecDIR_FULL;  // LCOV_EXCL_LINE
+        (*sleBridge)[sfOwnerNode] = *page;
+    }
+
+    adjustOwnerCount(ctx_.view(), sleAcct, 1, ctx_.journal);
+
+    ctx_.view().insert(sleBridge);
+    ctx_.view().update(sleAcct);
+
+    return tesSUCCESS;
+}
+
+//------------------------------------------------------------------------------
+

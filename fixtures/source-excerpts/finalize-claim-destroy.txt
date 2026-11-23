@@ -1,0 +1,27 @@
+// Source: postfiatorg/postfiatd @ 0085a1ff885d6a446369cf73a4430f75af22be55
+// File: src/xrpld/app/tx/detail/XChainBridge.cpp
+// Lines: 739-760
+// Verbatim excerpt; line numbers verified with grep -n on the pinned checkout.
+
+    if (auto const sleClaimID = outerSb.peek(claimIDKeylet))
+    {
+        auto const cidOwner = (*sleClaimID)[sfAccount];
+        {
+            // Remove the claim id
+            auto const sleOwner = outerSb.peek(keylet::account(cidOwner));
+            auto const page = (*sleClaimID)[sfOwnerNode];
+            if (!outerSb.dirRemove(
+                    keylet::ownerDir(cidOwner), page, sleClaimID->key(), true))
+            {
+                JLOG(j.fatal())
+                    << "Unable to delete xchain seq number from owner.";
+                result.rmSleTer = tefBAD_LEDGER;
+                return result;
+            }
+
+            // Remove the claim id from the ledger
+            outerSb.erase(sleClaimID);
+
+            adjustOwnerCount(outerSb, sleOwner, -1, j);
+        }
+    }

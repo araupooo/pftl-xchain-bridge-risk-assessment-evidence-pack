@@ -1,0 +1,30 @@
+// Source: postfiatorg/postfiatd @ 0085a1ff885d6a446369cf73a4430f75af22be55
+// File: src/xrpld/app/tx/detail/XChainBridge.cpp
+// Lines: 1806-1830
+// Verbatim excerpt; line numbers verified with grep -n on the pinned checkout.
+
+        auto const [signersList, quorum, slTer] =
+            getSignersListAndQuorum(ctx_.view(), *sleBridge, ctx_.journal);
+
+        if (!isTesSuccess(slTer))
+            return Unexpected(slTer);
+
+        XChainClaimAttestations curAtts{
+            sleClaimID->getFieldArray(sfXChainClaimAttestations)};
+
+        auto const claimR = onClaim(
+            curAtts,
+            psb,
+            sendingAmount,
+            /*wasLockingChainSend*/ srcChain ==
+                STXChainBridge::ChainType::locking,
+            quorum,
+            signersList,
+            ctx_.journal);
+        if (!claimR.has_value())
+            return Unexpected(claimR.error());
+
+        return ScopeResult{
+            claimR.value(),
+            (*sleClaimID)[sfAccount],
+            sendingAmount,

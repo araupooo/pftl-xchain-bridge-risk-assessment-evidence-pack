@@ -1,0 +1,26 @@
+// Source: postfiatorg/postfiatd @ 0085a1ff885d6a446369cf73a4430f75af22be55
+// File: src/xrpld/app/tx/detail/XChainBridge.cpp
+// Lines: 675-695
+// Verbatim excerpt; line numbers verified with grep -n on the pinned checkout.
+
+                return tesSUCCESS;
+
+            // distribute the reward pool
+            // if the transfer failed, distribute the pool for "OnTransferFail"
+            // cases (the attesters did their job)
+            STAmount const share = [&] {
+                auto const round_mode =
+                    innerSb.rules().enabled(fixXChainRewardRounding)
+                    ? Number::rounding_mode::downward
+                    : Number::getround();
+                saveNumberRoundMode _{Number::setround(round_mode)};
+
+                STAmount const den{rewardAccounts.size()};
+                return divide(rewardPool, den, rewardPool.issue());
+            }();
+            STAmount distributed = rewardPool.zeroed();
+            for (auto const& rewardAccount : rewardAccounts)
+            {
+                auto const thTer = transferHelper(
+                    innerSb,
+                    rewardPoolSrc,

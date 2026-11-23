@@ -1,0 +1,18 @@
+// Source: postfiatorg/postfiatd @ 0085a1ff885d6a446369cf73a4430f75af22be55
+// File: include/xrpl/protocol/detail/ledger_entries.macro
+// Lines: 228-240
+// Verbatim excerpt; line numbers verified with grep -n on the pinned checkout.
+
+LEDGER_ENTRY(ltBRIDGE, 0x0069, Bridge, bridge, ({
+    {sfAccount,                  soeREQUIRED},
+    {sfSignatureReward,          soeREQUIRED},
+    {sfMinAccountCreateAmount,   soeOPTIONAL},
+    {sfXChainBridge,             soeREQUIRED},
+    {sfXChainClaimID,            soeREQUIRED},
+    {sfXChainAccountCreateCount, soeREQUIRED},
+    {sfXChainAccountClaimCount,  soeREQUIRED},
+    {sfOwnerNode,                soeREQUIRED},
+    {sfPreviousTxnID,            soeREQUIRED},
+    {sfPreviousTxnLgrSeq,        soeREQUIRED},
+}))
+

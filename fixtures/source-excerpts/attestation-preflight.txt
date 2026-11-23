@@ -1,0 +1,31 @@
+// Source: postfiatorg/postfiatd @ 0085a1ff885d6a446369cf73a4430f75af22be55
+// File: src/xrpld/app/tx/detail/XChainBridge.cpp
+// Lines: 1215-1240
+// Verbatim excerpt; line numbers verified with grep -n on the pinned checkout.
+
+attestationpreflight(PreflightContext const& ctx)
+{
+    if (!publicKeyType(ctx.tx[sfPublicKey]))
+        return temMALFORMED;
+
+    auto const att = toClaim<TAttestation>(ctx.tx);
+    if (!att)
+        return temMALFORMED;
+
+    STXChainBridge const bridgeSpec = ctx.tx[sfXChainBridge];
+    if (!att->verify(bridgeSpec))
+        return temXCHAIN_BAD_PROOF;
+    if (!att->validAmounts())
+        return temXCHAIN_BAD_PROOF;
+
+    if (att->sendingAmount.signum() <= 0)
+        return temXCHAIN_BAD_PROOF;
+    auto const expectedIssue =
+        bridgeSpec.issue(STXChainBridge::srcChain(att->wasLockingChainSend));
+    if (att->sendingAmount.issue() != expectedIssue)
+        return temXCHAIN_BAD_PROOF;
+
+    return tesSUCCESS;
+}
+
+template <class TAttestation>

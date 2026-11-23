@@ -1,0 +1,79 @@
+// Source: postfiatorg/postfiatd @ 0085a1ff885d6a446369cf73a4430f75af22be55
+// File: src/xrpld/app/tx/detail/XChainBridge.cpp
+// Lines: 1374-1447
+// Verbatim excerpt; line numbers verified with grep -n on the pinned checkout.
+
+XChainCreateBridge::preflight(PreflightContext const& ctx)
+{
+    auto const account = ctx.tx[sfAccount];
+    auto const reward = ctx.tx[sfSignatureReward];
+    auto const minAccountCreate = ctx.tx[~sfMinAccountCreateAmount];
+    auto const bridgeSpec = ctx.tx[sfXChainBridge];
+    // Doors must be distinct to help prevent transaction replay attacks
+    if (bridgeSpec.lockingChainDoor() == bridgeSpec.issuingChainDoor())
+    {
+        return temXCHAIN_EQUAL_DOOR_ACCOUNTS;
+    }
+
+    if (bridgeSpec.lockingChainDoor() != account &&
+        bridgeSpec.issuingChainDoor() != account)
+    {
+        return temXCHAIN_BRIDGE_NONDOOR_OWNER;
+    }
+
+    if (isXRP(bridgeSpec.lockingChainIssue()) !=
+        isXRP(bridgeSpec.issuingChainIssue()))
+    {
+        // Because ious and xrp have different numeric ranges, both the src and
+        // dst issues must be both XRP or both IOU.
+        return temXCHAIN_BRIDGE_BAD_ISSUES;
+    }
+
+    if (!isXRP(reward) || reward.signum() < 0)
+    {
+        return temXCHAIN_BRIDGE_BAD_REWARD_AMOUNT;
+    }
+
+    if (minAccountCreate &&
+        ((!isXRP(*minAccountCreate) || minAccountCreate->signum() <= 0) ||
+         !isXRP(bridgeSpec.lockingChainIssue()) ||
+         !isXRP(bridgeSpec.issuingChainIssue())))
+    {
+        return temXCHAIN_BRIDGE_BAD_MIN_ACCOUNT_CREATE_AMOUNT;
+    }
+
+    if (isXRP(bridgeSpec.issuingChainIssue()))
+    {
+        // Issuing account must be the root account for XRP (which presumably
+        // owns all the XRP). This is done so the issuing account can't "run
+        // out" of wrapped tokens.
+        static auto const rootAccount = calcAccountID(
+            generateKeyPair(
+                KeyType::secp256k1, generateSeed("masterpassphrase"))
+                .first);
+        if (bridgeSpec.issuingChainDoor() != rootAccount)
+        {
+            return temXCHAIN_BRIDGE_BAD_ISSUES;
+        }
+    }
+    else
+    {
+        // Issuing account must be the issuer for non-XRP. This is done so the
+        // issuing account can't "run out" of wrapped tokens.
+        if (bridgeSpec.issuingChainDoor() !=
+            bridgeSpec.issuingChainIssue().account)
+        {
+            return temXCHAIN_BRIDGE_BAD_ISSUES;
+        }
+    }
+
+    if (bridgeSpec.lockingChainDoor() == bridgeSpec.lockingChainIssue().account)
+    {
+        // If the locking chain door is locking their own asset, in some sense
+        // nothing is being locked. Disallow this.
+        return temXCHAIN_BRIDGE_BAD_ISSUES;
+    }
+
+    return tesSUCCESS;
+}
+

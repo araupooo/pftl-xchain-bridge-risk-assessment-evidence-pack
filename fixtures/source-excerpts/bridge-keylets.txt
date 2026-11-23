@@ -1,0 +1,40 @@
+// Source: postfiatorg/postfiatd @ 0085a1ff885d6a446369cf73a4430f75af22be55
+// File: src/libxrpl/protocol/Indexes.cpp
+// Lines: 481-515
+// Verbatim excerpt; line numbers verified with grep -n on the pinned checkout.
+
+bridge(STXChainBridge const& bridge, STXChainBridge::ChainType chainType)
+{
+    // A door account can support multiple bridges. On the locking chain
+    // there can only be one bridge per lockingChainCurrency. On the issuing
+    // chain there can only be one bridge per issuingChainCurrency.
+    auto const& issue = bridge.issue(chainType);
+    return {
+        ltBRIDGE,
+        indexHash(
+            LedgerNameSpace::BRIDGE, bridge.door(chainType), issue.currency)};
+}
+
+Keylet
+xChainClaimID(STXChainBridge const& bridge, std::uint64_t seq)
+{
+    return {
+        ltXCHAIN_OWNED_CLAIM_ID,
+        indexHash(
+            LedgerNameSpace::XCHAIN_CLAIM_ID,
+            bridge.lockingChainDoor(),
+            bridge.lockingChainIssue(),
+            bridge.issuingChainDoor(),
+            bridge.issuingChainIssue(),
+            seq)};
+}
+
+Keylet
+xChainCreateAccountClaimID(STXChainBridge const& bridge, std::uint64_t seq)
+{
+    return {
+        ltXCHAIN_OWNED_CREATE_ACCOUNT_CLAIM_ID,
+        indexHash(
+            LedgerNameSpace::XCHAIN_CREATE_ACCOUNT_CLAIM_ID,
+            bridge.lockingChainDoor(),
+            bridge.lockingChainIssue(),

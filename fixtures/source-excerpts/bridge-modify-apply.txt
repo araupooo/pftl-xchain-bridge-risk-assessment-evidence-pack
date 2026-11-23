@@ -1,0 +1,45 @@
+// Source: postfiatorg/postfiatd @ 0085a1ff885d6a446369cf73a4430f75af22be55
+// File: src/xrpld/app/tx/detail/XChainBridge.cpp
+// Lines: 1612-1651
+// Verbatim excerpt; line numbers verified with grep -n on the pinned checkout.
+
+TER
+BridgeModify::doApply()
+{
+    auto const account = ctx_.tx[sfAccount];
+    auto const bridgeSpec = ctx_.tx[sfXChainBridge];
+    auto const reward = ctx_.tx[~sfSignatureReward];
+    auto const minAccountCreate = ctx_.tx[~sfMinAccountCreateAmount];
+    bool const clearAccountCreate =
+        ctx_.tx.getFlags() & tfClearAccountCreateAmount;
+
+    auto const sleAcct = ctx_.view().peek(keylet::account(account));
+    if (!sleAcct)
+        return tecINTERNAL;  // LCOV_EXCL_LINE
+
+    STXChainBridge::ChainType const chainType =
+        STXChainBridge::srcChain(account == bridgeSpec.lockingChainDoor());
+
+    auto const sleBridge =
+        ctx_.view().peek(keylet::bridge(bridgeSpec, chainType));
+    if (!sleBridge)
+        return tecINTERNAL;  // LCOV_EXCL_LINE
+
+    if (reward)
+        (*sleBridge)[sfSignatureReward] = *reward;
+    if (minAccountCreate)
+    {
+        (*sleBridge)[sfMinAccountCreateAmount] = *minAccountCreate;
+    }
+    if (clearAccountCreate &&
+        sleBridge->isFieldPresent(sfMinAccountCreateAmount))
+    {
+        sleBridge->makeFieldAbsent(sfMinAccountCreateAmount);
+    }
+    ctx_.view().update(sleBridge);
+
+    return tesSUCCESS;
+}
+
+//------------------------------------------------------------------------------
+

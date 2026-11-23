@@ -1,0 +1,9 @@
+// Source: postfiatorg/postfiatd @ 0085a1ff885d6a446369cf73a4430f75af22be55
+// File: src/xrpld/app/tx/detail/XChainBridge.cpp
+// Lines: 74-77
+// Verbatim excerpt; line numbers verified with grep -n on the pinned checkout.
+
+   chain to another. This account will be jointly controlled by a set of witness
+   servers by using the ledger's multi-signature support. The master key will be
+   disabled. These witness servers are trusted in the sense that if a quorum of
+   them collude, they can steal the funds put into trust.

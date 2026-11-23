@@ -1,0 +1,26 @@
+// Source: postfiatorg/postfiatd @ 0085a1ff885d6a446369cf73a4430f75af22be55
+// File: src/xrpld/app/tx/detail/XChainBridge.cpp
+// Lines: 346-366
+// Verbatim excerpt; line numbers verified with grep -n on the pinned checkout.
+
+// Check if there is a quorurm of attestations for the given amount and
+// chain. If so return the reward accounts, if not return the tec code (most
+// likely tecXCHAIN_CLAIM_NO_QUORUM)
+Expected<std::vector<AccountID>, TER>
+onClaim(
+    XChainClaimAttestations& attestations,
+    ReadView const& view,
+    STAmount const& sendingAmount,
+    bool wasLockingChainSend,
+    std::uint32_t quorum,
+    std::unordered_map<AccountID, std::uint32_t> const& signersList,
+    beast::Journal j)
+{
+    XChainClaimAttestation::MatchFields toMatch{
+        sendingAmount, wasLockingChainSend, std::nullopt};
+    return claimHelper(
+        attestations, view, toMatch, CheckDst::ignore, quorum, signersList, j);
+}
+
+enum class CanCreateDstPolicy { no, yes };
+

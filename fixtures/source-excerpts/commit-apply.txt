@@ -1,0 +1,48 @@
+// Source: postfiatorg/postfiatd @ 0085a1ff885d6a446369cf73a4430f75af22be55
+// File: src/xrpld/app/tx/detail/XChainBridge.cpp
+// Lines: 1943-1985
+// Verbatim excerpt; line numbers verified with grep -n on the pinned checkout.
+
+XChainCommit::doApply()
+{
+    PaymentSandbox psb(&ctx_.view());
+
+    auto const account = ctx_.tx[sfAccount];
+    auto const amount = ctx_.tx[sfAmount];
+    auto const bridgeSpec = ctx_.tx[sfXChainBridge];
+
+    if (!psb.read(keylet::account(account)))
+        return tecINTERNAL;  // LCOV_EXCL_LINE
+
+    auto const sleBridge = readBridge(psb, bridgeSpec);
+    if (!sleBridge)
+        return tecINTERNAL;  // LCOV_EXCL_LINE
+
+    auto const dst = (*sleBridge)[sfAccount];
+
+    // Support dipping into reserves to pay the fee
+    TransferHelperSubmittingAccountInfo submittingAccountInfo{
+        account_, mPriorBalance, mSourceBalance};
+
+    auto const thTer = transferHelper(
+        psb,
+        account,
+        dst,
+        /*dstTag*/ std::nullopt,
+        /*claimOwner*/ std::nullopt,
+        amount,
+        CanCreateDstPolicy::no,
+        DepositAuthPolicy::normal,
+        submittingAccountInfo,
+        ctx_.journal);
+
+    if (!isTesSuccess(thTer))
+        return thTer;
+
+    psb.apply(ctx_.rawView());
+
+    return tesSUCCESS;
+}
+
+//------------------------------------------------------------------------------
+
