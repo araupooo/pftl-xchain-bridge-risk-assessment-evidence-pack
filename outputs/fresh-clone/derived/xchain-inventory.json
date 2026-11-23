@@ -1,0 +1,87 @@
+{
+ "amendments": [
+  {
+   "live": "disabled",
+   "name": "XChainBridge",
+   "source": "include/xrpl/protocol/detail/features.macro:84",
+   "vote": "DefaultNo"
+  },
+  {
+   "live": "disabled",
+   "name": "fixXChainRewardRounding",
+   "source": "include/xrpl/protocol/detail/features.macro:75",
+   "vote": "DefaultNo"
+  }
+ ],
+ "claim_id_rule": "counter + 1 per XChainCreateClaimID, destroyed after funds move, never reusable (XChainBridge.cpp 2035-2098, 739-760)",
+ "ledger_entries": [
+  {
+   "code": "0x0069",
+   "source": "include/xrpl/protocol/detail/ledger_entries.macro:228-240",
+   "type": "Bridge"
+  },
+  {
+   "code": "0x0071",
+   "source": "include/xrpl/protocol/detail/ledger_entries.macro:277-290",
+   "type": "XChainOwnedClaimID"
+  },
+  {
+   "code": "0x0074",
+   "source": "include/xrpl/protocol/detail/ledger_entries.macro:333-345",
+   "type": "XChainOwnedCreateAccountClaimID"
+  }
+ ],
+ "pinned_commit": "0085a1ff885d6a446369cf73a4430f75af22be55",
+ "quorum_rule": "weight >= quorum; quorum = door account SignerList sfSignerQuorum; weights per signer (claimHelper, XChainBridge.cpp 189-242; getSignersListAndQuorum, 771-810)",
+ "replay_rule": "one attestation per signer; re-attestation replaces the old one (onNewAttestations, XChainBridge.cpp 282-350)",
+ "transaction_types": [
+  {
+   "code": 41,
+   "gate": "featureXChainBridge",
+   "source": "include/xrpl/protocol/detail/transactions.macro:526-537",
+   "type": "XChainCreateClaimID"
+  },
+  {
+   "code": 42,
+   "gate": "featureXChainBridge",
+   "source": "include/xrpl/protocol/detail/transactions.macro:539-549",
+   "type": "XChainCommit"
+  },
+  {
+   "code": 43,
+   "gate": "featureXChainBridge",
+   "source": "include/xrpl/protocol/detail/transactions.macro:551-562",
+   "type": "XChainClaim"
+  },
+  {
+   "code": 44,
+   "gate": "featureXChainBridge",
+   "source": "include/xrpl/protocol/detail/transactions.macro:564-575",
+   "type": "XChainAccountCreateCommit"
+  },
+  {
+   "code": 45,
+   "gate": "featureXChainBridge",
+   "source": "include/xrpl/protocol/detail/transactions.macro:576-595",
+   "type": "XChainAddClaimAttestation"
+  },
+  {
+   "code": 46,
+   "gate": "featureXChainBridge",
+   "source": "include/xrpl/protocol/detail/transactions.macro:596-616",
+   "type": "XChainAddAccountCreateAttestation"
+  },
+  {
+   "code": 47,
+   "gate": "featureXChainBridge",
+   "source": "include/xrpl/protocol/detail/transactions.macro:618-627",
+   "type": "XChainModifyBridge"
+  },
+  {
+   "code": 48,
+   "gate": "featureXChainBridge",
+   "source": "include/xrpl/protocol/detail/transactions.macro:629-637",
+   "type": "XChainCreateBridge"
+  }
+ ]
+}
