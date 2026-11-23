@@ -1,0 +1,45 @@
+// Source: postfiatorg/postfiatd @ 0085a1ff885d6a446369cf73a4430f75af22be55
+// File: src/xrpld/app/tx/detail/XChainBridge.cpp
+// Lines: 771-810
+// Verbatim excerpt; line numbers verified with grep -n on the pinned checkout.
+
+    @return map of the signer's list (AccountIDs and weights), the quorum, and
+            error code
+*/
+std::tuple<std::unordered_map<AccountID, std::uint32_t>, std::uint32_t, TER>
+getSignersListAndQuorum(
+    ReadView const& view,
+    SLE const& sleBridge,
+    beast::Journal j)
+{
+    std::unordered_map<AccountID, std::uint32_t> r;
+    std::uint32_t q = std::numeric_limits<std::uint32_t>::max();
+
+    AccountID const thisDoor = sleBridge[sfAccount];
+    auto const sleDoor = [&] { return view.read(keylet::account(thisDoor)); }();
+
+    if (!sleDoor)
+    {
+        return {r, q, tecINTERNAL};
+    }
+
+    auto const sleS = view.read(keylet::signers(sleBridge[sfAccount]));
+    if (!sleS)
+    {
+        return {r, q, tecXCHAIN_NO_SIGNERS_LIST};
+    }
+    q = (*sleS)[sfSignerQuorum];
+
+    auto const accountSigners = SignerEntries::deserialize(*sleS, j, "ledger");
+
+    if (!accountSigners)
+    {
+        return {r, q, tecINTERNAL};
+    }
+
+    for (auto const& as : *accountSigners)
+    {
+        r[as.account] = as.weight;
+    }
+
+    return {std::move(r), q, tesSUCCESS};

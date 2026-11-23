@@ -1,0 +1,26 @@
+// Source: postfiatorg/postfiatd @ 0085a1ff885d6a446369cf73a4430f75af22be55
+// File: src/xrpld/app/tx/detail/XChainBridge.cpp
+// Lines: 52-72
+// Verbatim excerpt; line numbers verified with grep -n on the pinned checkout.
+
+   Bridges connect two independent ledgers: a "locking chain" and an "issuing
+   chain". An asset can be moved from the locking chain to the issuing chain by
+   putting it into trust on the locking chain, and issuing a "wrapped asset"
+   that represents the locked asset on the issuing chain.
+
+   Note that a bridge is not an exchange. There is no exchange rate: one wrapped
+   asset on the issuing chain always represents one asset in trust on the
+   locking chain. The bridge also does not exchange an asset on the locking
+   chain for an asset on the issuing chain.
+
+   A good model for thinking about bridges is a box that contains an infinite
+   number of "wrapped tokens". When a token from the locking chain
+   (locking-chain-token) is put into the box, a wrapped token is taken out of
+   the box and put onto the issuing chain (issuing-chain-token). No one can use
+   the locking-chain-token while it remains in the box. When an
+   issuing-chain-token is returned to the box, one locking-chain-token is taken
+   out of the box and put back onto the locking chain.
+
+   This requires a way to put assets into trust on one chain (put a
+   locking-chain-token into the box). A regular XRP account is used for this.
+   This account is called a "door account". Much in the same way that a door is

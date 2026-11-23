@@ -1,0 +1,26 @@
+// Source: postfiatorg/postfiatd @ 0085a1ff885d6a446369cf73a4430f75af22be55
+// File: src/xrpld/rpc/handlers/LedgerEntry.cpp
+// Lines: 120-140
+// Verbatim excerpt; line numbers verified with grep -n on the pinned checkout.
+
+    auto const bridge =
+        LedgerEntryHelpers::parseBridgeFields(params[jss::bridge]);
+    if (!bridge)
+        return Unexpected(bridge.error());
+
+    auto const account = LedgerEntryHelpers::requiredAccountID(
+        params, jss::bridge_account, "malformedBridgeAccount");
+    if (!account)
+        return Unexpected(account.error());
+
+    STXChainBridge::ChainType const chainType =
+        STXChainBridge::srcChain(account.value() == bridge->lockingChainDoor());
+    if (account.value() != bridge->door(chainType))
+        return LedgerEntryHelpers::malformedError("malformedRequest", "");
+
+    return keylet::bridge(*bridge, chainType).key;
+}
+
+static Expected<uint256, Json::Value>
+parseCheck(Json::Value const& params, Json::StaticString const fieldName)
+{

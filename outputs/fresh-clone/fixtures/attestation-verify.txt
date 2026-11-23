@@ -1,0 +1,10 @@
+// Source: postfiatorg/postfiatd @ 0085a1ff885d6a446369cf73a4430f75af22be55
+// File: src/libxrpl/protocol/XChainAttestations.cpp
+// Lines: 102-106
+// Verbatim excerpt; line numbers verified with grep -n on the pinned checkout.
+
+AttestationBase::verify(STXChainBridge const& bridge) const
+{
+    std::vector<std::uint8_t> msg = message(bridge);
+    return ripple::verify(publicKey, makeSlice(msg), signature);
+}

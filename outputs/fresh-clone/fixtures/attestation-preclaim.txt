@@ -1,0 +1,36 @@
+// Source: postfiatorg/postfiatd @ 0085a1ff885d6a446369cf73a4430f75af22be55
+// File: src/xrpld/app/tx/detail/XChainBridge.cpp
+// Lines: 1241-1271
+// Verbatim excerpt; line numbers verified with grep -n on the pinned checkout.
+
+TER
+attestationPreclaim(PreclaimContext const& ctx)
+{
+    auto const att = toClaim<TAttestation>(ctx.tx);
+    // checked in preflight
+    if (!att)
+        return tecINTERNAL;  // LCOV_EXCL_LINE
+
+    STXChainBridge const bridgeSpec = ctx.tx[sfXChainBridge];
+    auto const sleBridge = readBridge(ctx.view, bridgeSpec);
+    if (!sleBridge)
+    {
+        return tecNO_ENTRY;
+    }
+
+    AccountID const attestationSignerAccount{
+        ctx.tx[sfAttestationSignerAccount]};
+    PublicKey const pk{ctx.tx[sfPublicKey]};
+
+    // signersList is a map from account id to weights
+    auto const [signersList, quorum, slTer] =
+        getSignersListAndQuorum(ctx.view, *sleBridge, ctx.j);
+
+    if (!isTesSuccess(slTer))
+        return slTer;
+
+    return checkAttestationPublicKey(
+        ctx.view, signersList, attestationSignerAccount, pk, ctx.j);
+}
+
+template <class TAttestation>

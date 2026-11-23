@@ -1,0 +1,68 @@
+// Source: postfiatorg/postfiatd @ 0085a1ff885d6a446369cf73a4430f75af22be55
+// File: src/xrpld/app/tx/detail/XChainBridge.cpp
+// Lines: 282-344
+// Verbatim excerpt; line numbers verified with grep -n on the pinned checkout.
+
+template <class TAttestation>
+[[nodiscard]] OnNewAttestationResult
+onNewAttestations(
+    XChainAttestationsBase<TAttestation>& attestations,
+    ReadView const& view,
+    typename TAttestation::TSignedAttestation const* attBegin,
+    typename TAttestation::TSignedAttestation const* attEnd,
+    std::uint32_t quorum,
+    std::unordered_map<AccountID, std::uint32_t> const& signersList,
+    beast::Journal j)
+{
+    bool changed = false;
+    for (auto att = attBegin; att != attEnd; ++att)
+    {
+        if (checkAttestationPublicKey(
+                view,
+                signersList,
+                att->attestationSignerAccount,
+                att->publicKey,
+                j) != tesSUCCESS)
+        {
+            // The checkAttestationPublicKey is not strictly necessary here (it
+            // should be checked in a preclaim step), but it would be bad to let
+            // this slip through if that changes, and the check is relatively
+            // cheap, so we check again
+            continue;
+        }
+
+        auto const& claimSigningAccount = att->attestationSignerAccount;
+        if (auto i = std::find_if(
+                attestations.begin(),
+                attestations.end(),
+                [&](auto const& a) {
+                    return a.keyAccount == claimSigningAccount;
+                });
+            i != attestations.end())
+        {
+            // existing attestation
+            // replace old attestation with new attestation
+            *i = TAttestation{*att};
+            changed = true;
+        }
+        else
+        {
+            attestations.emplace_back(*att);
+            changed = true;
+        }
+    }
+
+    auto r = claimHelper(
+        attestations,
+        view,
+        typename TAttestation::MatchFields{*attBegin},
+        CheckDst::check,
+        quorum,
+        signersList,
+        j);
+
+    if (!r.has_value())
+        return {std::nullopt, changed};
+
+    return {std::move(r.value()), changed};
+};

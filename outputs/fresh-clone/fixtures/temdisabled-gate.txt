@@ -1,0 +1,22 @@
+// Source: postfiatorg/postfiatd @ 0085a1ff885d6a446369cf73a4430f75af22be55
+// File: src/xrpld/app/tx/detail/Transactor.h
+// Lines: 409-425
+// Verbatim excerpt; line numbers verified with grep -n on the pinned checkout.
+
+
+template <class T>
+NotTEC
+Transactor::invokePreflight(PreflightContext const& ctx)
+{
+    // Using this lookup does NOT require checking the fixDelegateV1_1. The data
+    // exists regardless of whether it is enabled.
+    auto const feature =
+        Permission::getInstance().getTxFeature(ctx.tx.getTxnType());
+
+    if (feature && !ctx.rules.enabled(*feature))
+        return temDISABLED;
+
+    if (!T::checkExtraFeatures(ctx))
+        return temDISABLED;
+
+    if (auto const ret = preflight1(ctx, T::getFlagsMask(ctx)))

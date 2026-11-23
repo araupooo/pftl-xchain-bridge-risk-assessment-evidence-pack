@@ -1,0 +1,18 @@
+// Source: postfiatorg/postfiatd @ 0085a1ff885d6a446369cf73a4430f75af22be55
+// File: src/xrpld/app/tx/detail/XChainBridge.cpp
+// Lines: 86-98
+// Verbatim excerpt; line numbers verified with grep -n on the pinned checkout.
+
+   There needs to be a way to prevent the attestations from the witness
+   servers from being used more than once. "Claim ids" fill this role. A claim
+   id must be acquired on the destination chain before the asset is "put into
+   the box" on the source chain. This claim id has a unique id, and once it is
+   destroyed it can never exist again (it's a simple counter). The attestations
+   reference this claim id, and are accumulated on the claim id. Once a quorum
+   is reached, funds can move. Once the funds move, the claim id is destroyed.
+
+   Finally, a claim id requires that the sender has an account on the
+   destination chain. For some chains, this can be a problem - especially if
+   the wrapped asset represents XRP, and XRP is needed to create an account.
+   There's a bootstrap problem. To address this, there is a special transaction
+   used to create accounts. This transaction does not require a claim id.

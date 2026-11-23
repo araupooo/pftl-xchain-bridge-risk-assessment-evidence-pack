@@ -1,0 +1,117 @@
+// Source: postfiatorg/postfiatd @ 0085a1ff885d6a446369cf73a4430f75af22be55
+// File: include/xrpl/protocol/detail/transactions.macro
+// Lines: 526-637
+// Verbatim excerpt; line numbers verified with grep -n on the pinned checkout.
+
+#   include <xrpld/app/tx/detail/XChainBridge.h>
+#endif
+TRANSACTION(ttXCHAIN_CREATE_CLAIM_ID, 41, XChainCreateClaimID,
+    Delegation::delegatable,
+    featureXChainBridge,
+    noPriv,
+    ({
+    {sfXChainBridge, soeREQUIRED},
+    {sfSignatureReward, soeREQUIRED},
+    {sfOtherChainSource, soeREQUIRED},
+}))
+
+/** This transactions initiates a crosschain transaction */
+TRANSACTION(ttXCHAIN_COMMIT, 42, XChainCommit,
+    Delegation::delegatable,
+    featureXChainBridge,
+    noPriv,
+    ({
+    {sfXChainBridge, soeREQUIRED},
+    {sfXChainClaimID, soeREQUIRED},
+    {sfAmount, soeREQUIRED},
+    {sfOtherChainDestination, soeOPTIONAL},
+}))
+
+/** This transaction completes a crosschain transaction */
+TRANSACTION(ttXCHAIN_CLAIM, 43, XChainClaim,
+    Delegation::delegatable,
+    featureXChainBridge,
+    noPriv,
+    ({
+    {sfXChainBridge, soeREQUIRED},
+    {sfXChainClaimID, soeREQUIRED},
+    {sfDestination, soeREQUIRED},
+    {sfDestinationTag, soeOPTIONAL},
+    {sfAmount, soeREQUIRED},
+}))
+
+/** This transaction initiates a crosschain account create transaction */
+TRANSACTION(ttXCHAIN_ACCOUNT_CREATE_COMMIT, 44, XChainAccountCreateCommit,
+    Delegation::delegatable,
+    featureXChainBridge,
+    noPriv,
+    ({
+    {sfXChainBridge, soeREQUIRED},
+    {sfDestination, soeREQUIRED},
+    {sfAmount, soeREQUIRED},
+    {sfSignatureReward, soeREQUIRED},
+}))
+
+/** This transaction adds an attestation to a claim */
+TRANSACTION(ttXCHAIN_ADD_CLAIM_ATTESTATION, 45, XChainAddClaimAttestation,
+    Delegation::delegatable,
+    featureXChainBridge,
+    createAcct,
+    ({
+    {sfXChainBridge, soeREQUIRED},
+
+    {sfAttestationSignerAccount, soeREQUIRED},
+    {sfPublicKey, soeREQUIRED},
+    {sfSignature, soeREQUIRED},
+    {sfOtherChainSource, soeREQUIRED},
+    {sfAmount, soeREQUIRED},
+    {sfAttestationRewardAccount, soeREQUIRED},
+    {sfWasLockingChainSend, soeREQUIRED},
+
+    {sfXChainClaimID, soeREQUIRED},
+    {sfDestination, soeOPTIONAL},
+}))
+
+/** This transaction adds an attestation to an account */
+TRANSACTION(ttXCHAIN_ADD_ACCOUNT_CREATE_ATTESTATION, 46,
+    XChainAddAccountCreateAttestation,
+    Delegation::delegatable,
+    featureXChainBridge,
+    createAcct,
+    ({
+    {sfXChainBridge, soeREQUIRED},
+
+    {sfAttestationSignerAccount, soeREQUIRED},
+    {sfPublicKey, soeREQUIRED},
+    {sfSignature, soeREQUIRED},
+    {sfOtherChainSource, soeREQUIRED},
+    {sfAmount, soeREQUIRED},
+    {sfAttestationRewardAccount, soeREQUIRED},
+    {sfWasLockingChainSend, soeREQUIRED},
+
+    {sfXChainAccountCreateCount, soeREQUIRED},
+    {sfDestination, soeREQUIRED},
+    {sfSignatureReward, soeREQUIRED},
+}))
+
+/** This transaction modifies a sidechain */
+TRANSACTION(ttXCHAIN_MODIFY_BRIDGE, 47, XChainModifyBridge,
+    Delegation::delegatable,
+    featureXChainBridge,
+    noPriv,
+    ({
+    {sfXChainBridge, soeREQUIRED},
+    {sfSignatureReward, soeOPTIONAL},
+    {sfMinAccountCreateAmount, soeOPTIONAL},
+}))
+
+/** This transactions creates a sidechain */
+TRANSACTION(ttXCHAIN_CREATE_BRIDGE, 48, XChainCreateBridge,
+    Delegation::delegatable,
+    featureXChainBridge,
+    noPriv,
+    ({
+    {sfXChainBridge, soeREQUIRED},
+    {sfSignatureReward, soeREQUIRED},
+    {sfMinAccountCreateAmount, soeOPTIONAL},
+}))

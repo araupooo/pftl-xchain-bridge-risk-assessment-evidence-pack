@@ -1,0 +1,14 @@
+// Source: postfiatorg/postfiatd @ 0085a1ff885d6a446369cf73a4430f75af22be55
+// File: include/xrpl/protocol/detail/ledger_entries.macro
+// Lines: 333-341
+// Verbatim excerpt; line numbers verified with grep -n on the pinned checkout.
+
+LEDGER_ENTRY(ltXCHAIN_OWNED_CREATE_ACCOUNT_CLAIM_ID, 0x0074, XChainOwnedCreateAccountClaimID, xchain_owned_create_account_claim_id, ({
+    {sfAccount,                         soeREQUIRED},
+    {sfXChainBridge,                    soeREQUIRED},
+    {sfXChainAccountCreateCount,        soeREQUIRED},
+    {sfXChainCreateAccountAttestations, soeREQUIRED},
+    {sfOwnerNode,                       soeREQUIRED},
+    {sfPreviousTxnID,                   soeREQUIRED},
+    {sfPreviousTxnLgrSeq,               soeREQUIRED},
+}))

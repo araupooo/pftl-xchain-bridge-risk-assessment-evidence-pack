@@ -1,0 +1,15 @@
+// Source: postfiatorg/postfiatd @ 0085a1ff885d6a446369cf73a4430f75af22be55
+// File: include/xrpl/protocol/detail/features.macro
+// Lines: 75-84
+// Verbatim excerpt; line numbers verified with grep -n on the pinned checkout.
+
+XRPL_FIX    (XChainRewardRounding,       Supported::yes, VoteBehavior::DefaultNo)
+XRPL_FIX    (EmptyDID,                   Supported::yes, VoteBehavior::DefaultYes)
+XRPL_FEATURE(PriceOracle,                Supported::yes, VoteBehavior::DefaultYes)
+XRPL_FIX    (AMMOverflowOffer,           Supported::yes, VoteBehavior::DefaultYes)
+XRPL_FIX    (InnerObjTemplate,           Supported::yes, VoteBehavior::DefaultYes)
+XRPL_FIX    (NFTokenReserve,             Supported::yes, VoteBehavior::DefaultYes)
+XRPL_FIX    (FillOrKill,                 Supported::yes, VoteBehavior::DefaultYes)
+XRPL_FEATURE(DID,                        Supported::yes, VoteBehavior::DefaultYes)
+XRPL_FIX    (DisallowIncomingV1,         Supported::yes, VoteBehavior::DefaultYes)
+XRPL_FEATURE(XChainBridge,               Supported::yes, VoteBehavior::DefaultNo)
