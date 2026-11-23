@@ -1,0 +1,50 @@
+{
+ "include/xrpl/protocol/detail/features.macro": {
+  "blob_sha": "a88ebd1a492b9b5d658bde9c5f2835094536b244",
+  "commit": "0085a1ff885d6a446369cf73a4430f75af22be55",
+  "note": "verify against the GitHub API blob endpoint for this commit",
+  "size_bytes": 10479
+ },
+ "include/xrpl/protocol/detail/ledger_entries.macro": {
+  "blob_sha": "ba9a2e6d0ed19113b580f8a603d7f6082f65269f",
+  "commit": "0085a1ff885d6a446369cf73a4430f75af22be55",
+  "note": "verify against the GitHub API blob endpoint for this commit",
+  "size_bytes": 24140
+ },
+ "include/xrpl/protocol/detail/transactions.macro": {
+  "blob_sha": "4ed5336f3dddf4e3a962979ae6353277d750be15",
+  "commit": "0085a1ff885d6a446369cf73a4430f75af22be55",
+  "note": "verify against the GitHub API blob endpoint for this commit",
+  "size_bytes": 32505
+ },
+ "src/libxrpl/protocol/Indexes.cpp": {
+  "blob_sha": "ac37129bdb792072503bd1b1fe5b86e7693e3071",
+  "commit": "0085a1ff885d6a446369cf73a4430f75af22be55",
+  "note": "verify against the GitHub API blob endpoint for this commit",
+  "size_bytes": 16441
+ },
+ "src/libxrpl/protocol/XChainAttestations.cpp": {
+  "blob_sha": "e61224b570c3baec5baf6c0567d77eb5ae20230b",
+  "commit": "0085a1ff885d6a446369cf73a4430f75af22be55",
+  "note": "verify against the GitHub API blob endpoint for this commit",
+  "size_bytes": 23053
+ },
+ "src/xrpld/app/tx/detail/Transactor.h": {
+  "blob_sha": "0e67ba70c4079df8a693b2a093aefd837654759d",
+  "commit": "0085a1ff885d6a446369cf73a4430f75af22be55",
+  "note": "verify against the GitHub API blob endpoint for this commit",
+  "size_bytes": 13220
+ },
+ "src/xrpld/app/tx/detail/XChainBridge.cpp": {
+  "blob_sha": "d7731d8d98467438980d761a4cfa42e9089b194a",
+  "commit": "0085a1ff885d6a446369cf73a4430f75af22be55",
+  "note": "verify against the GitHub API blob endpoint for this commit",
+  "size_bytes": 72995
+ },
+ "src/xrpld/rpc/handlers/LedgerEntry.cpp": {
+  "blob_sha": "b1c20186fa28fc10d8bd3bfa314372deccc255e2",
+  "commit": "0085a1ff885d6a446369cf73a4430f75af22be55",
+  "note": "verify against the GitHub API blob endpoint for this commit",
+  "size_bytes": 27977
+ }
+}
