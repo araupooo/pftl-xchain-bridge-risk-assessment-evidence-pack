@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>PFTL XChain Bridge Risk Assessment — Evidence Pack Results</title>
+<style>
+body { font-family: system-ui, sans-serif; max-width: 900px; margin: 2em auto; padding: 0 1em; color: #111; }
+h1 { font-size: 1.5em; } h2 { font-size: 1.2em; margin-top: 1.5em; }
+table { border-collapse: collapse; width: 100%; margin: 0.5em 0; }
+th, td { border: 1px solid #ccc; padding: 0.4em 0.6em; text-align: left; font-size: 0.95em; }
+th { background: #f0f0f0; }
+code { background: #f4f4f4; padding: 0 0.3em; }
+.verdict { background: #fff8e1; border: 1px solid #e6c200; padding: 0.8em; }
+.pass { color: #0a7a0a; font-weight: bold; }
+</style>
+</head>
+<body>
+<h1>PFTL XChain Bridge Risk Assessment — Results</h1>
+<div class="verdict"><strong>Verdict: CODE-COMPLETE BUT DORMANT — NO LIVE BRIDGE.</strong>
+The XChain machinery is complete in the pinned code — weight-based
+witness quorum, replay-safe attestations, strict bridge-creation
+validation — and all 24 lab drill cases pass. But the
+<code>XChainBridge</code> amendment is disabled on the live testnet,
+no bridge object exists on the ledger, and the XRP issuing door the
+code requires is an account that does not exist. Nothing can move
+across a bridge today, and the project's own published bridge
+(pfUSDC) is proof-based, not this committee design.</div>
+
+<h2>Live measurement (2026-11-23 03:30–03:32 UTC, network 2025)</h2>
+<table>
+<tr><th>Field</th><th>Value</th></tr>
+<tr><td>Build version</td><td>1.0.9</td></tr>
+<tr><td>Validated ledger</td><td>8287770 (age 3 s)</td></tr>
+<tr><td>Complete ledgers</td><td>8200054–8287770</td></tr>
+<tr><td>Ledger cadence</td><td>3.059 s/ledger (20 ledgers in 61.2 s)</td></tr>
+<tr><td>Peers</td><td>21</td></tr>
+<tr><td>Validation quorum</td><td>17 of 25 validators</td></tr>
+<tr><td>Validator list</td><td>sequence 30, 25 validators, publisher <code>ED3F1E0D…</code></td></tr>
+<tr><td>XChainBridge amendment</td><td>Disabled (enabled false, supported true); 64 of 101 amendments enabled</td></tr>
+<tr><td>fixXChainRewardRounding</td><td>Disabled (enabled false, supported true)</td></tr>
+<tr><td>Genesis account</td><td><code>r4vhrMChCsaoFsBoCkRTRGUuc1njfr7bmA</code> — exists, 96,999,999,999,999,880 drops, flags 0, owns 0 objects</td></tr>
+<tr><td>Masterpassphrase root</td><td><code>r9cZA1mLK5R5Am25ArfXFmqgNwjZgnfk59</code> — <code>actNotFound</code></td></tr>
+<tr><td>Fabricated bridge lookup</td><td><code>entryNotFound</code> (error 98) — no bridge object exists</td></tr>
+<tr><td>pfUSDC page</td><td>HTTP 200, 68,866 bytes — proof-based bridge, no committee</td></tr>
+</table>
+
+<h2>Lab drills — 24/24 PASS</h2>
+<table>
+<tr><th>Drill</th><th>Cases</th><th>Wall time</th><th>Headline</th></tr>
+<tr><td>A — attestation replay</td><td>8/8</td><td>0.33 ms</td><td>Replayed attestation replaces, never double-counts; weight 2 of quorum 5 stays below quorum</td></tr>
+<tr><td>B — quorum threshold and claim-id counter</td><td>7/7</td><td>0.17 ms</td><td>Weight 4 of 5 fails; weight exactly 5 passes; claim ids advance 1, 2, 3 with overflow guarded</td></tr>
+<tr><td>C — malformed bridge-account rejection</td><td>9/9</td><td>0.10 ms</td><td>All nine malformed inputs rejected with the exact tem codes the pinned code returns</td></tr>
+</table>
+<p>Every case carries its own measured elapsed time (see
+<code>outputs/drill-run.log</code> and
+<code>outputs/derived/drill-results.json</code>).</p>
+
+<h2>Counts (recomputed from their tables)</h2>
+<table>
+<tr><th>Table</th><th>Count</th></tr>
+<tr><td>Findings</td><td>12 — 3 HIGH, 5 MEDIUM, 3 LOW, 1 INFO; 6 MEASURED, 6 SPECIFIED</td></tr>
+<tr><td>Claims</td><td>30 — 19 VERIFIED, 9 SPECIFIED, 1 UNVERIFIED, 1 UNTESTABLE</td></tr>
+<tr><td>Risks</td><td>14 — 3 HIGH, 6 MEDIUM, 4 LOW, 1 INFO</td></tr>
+<tr><td>Gaps</td><td>7</td></tr>
+<tr><td>Source excerpts</td><td>29 files, line numbers verified with grep -n on the pinned checkout</td></tr>
+</table>
+
+<h2>Reproduction</h2>
+<p><code>bash scripts/clean_reproduce.sh</code> — exit 0, 15/15 compare
+checks PASS. Fresh-clone run (2026-11-23 03:46 UTC): validated ledger
+advanced 8287770 → 8288058, cadence 2.924 s/ledger, drills 24/24 PASS.
+Full log: <code>outputs/fresh-clone-compare.log</code>.</p>
+
+<h2>Key findings</h2>
+<table>
+<tr><th>ID</th><th>Severity</th><th>Finding</th></tr>
+<tr><td>F-01</td><td>HIGH</td><td>XChainBridge amendment disabled: every XChain transaction returns temDISABLED</td></tr>
+<tr><td>F-02</td><td>HIGH</td><td>The XRP issuing door the code requires (masterpassphrase root) does not exist on the live ledger</td></tr>
+<tr><td>F-03</td><td>HIGH</td><td>Witness quorum lives in the door account's SignerList, not in the bridge object; a quorum that colludes can steal locked funds</td></tr>
+<tr><td>F-04</td><td>MEDIUM</td><td>No bridge exists on the live ledger: fabricated lookup entryNotFound, genesis owns 0 objects</td></tr>
+<tr><td>F-05</td><td>MEDIUM</td><td>Attestation replay is safe by construction: one entry per signer, re-attestation replaces</td></tr>
+<tr><td>F-06</td><td>MEDIUM</td><td>A quorum reached after a signer-list change stays dormant until a new attestation arrives</td></tr>
+<tr><td>F-07</td><td>MEDIUM</td><td>Reward-split rounding fix is amendment-gated and disabled live</td></tr>
+<tr><td>F-08</td><td>MEDIUM</td><td>The project's published bridge is pfUSDC, a proof-based design — not XChain</td></tr>
+<tr><td>F-09</td><td>LOW</td><td>The in-repo bridge spec the code points to (docs/bridge/spec.md) does not exist</td></tr>
+<tr><td>F-10</td><td>LOW</td><td>Bridges cannot be enumerated from the public surface; no vote counts are visible</td></tr>
+<tr><td>F-11</td><td>LOW</td><td>Clawback issuers and duplicate bridges are rejected at preclaim</td></tr>
+<tr><td>F-12</td><td>INFO</td><td>Live network context: build 1.0.9, validated 8287770, cadence 3.059 s/ledger</td></tr>
+</table>
+
+<p>Pinned source: postfiatorg/postfiatd commit
+<code>0085a1ff885d6a446369cf73a4430f75af22be55</code> (2026-10-10, PR #50
+merge, v1.0.9). Boundaries: read-only probes only; no transaction
+submitted; no bridge interaction; no peer connection opened to the
+live network; drills lab-only; attestation signature verification
+not runnable in this pack (no Ed25519 in the standard library).</p>
+</body>
+</html>
