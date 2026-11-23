@@ -1,0 +1,104 @@
+{
+ "build_version": "1.0.9",
+ "cadence": {
+  "elapsed_seconds": 61.2,
+  "end_seq": 8287798,
+  "ledgers": 20,
+  "seconds_per_ledger": 3.059,
+  "start_seq": 8287778
+ },
+ "complete_ledgers": "8200054-8287770",
+ "explorer": {
+  "https://explorer.postfiat.org/": {
+   "body_head": "<urlopen error Remote end closed connection without response>",
+   "http_status": null
+  },
+  "https://explorer.testnet.postfiat.org/": {
+   "body_head": "<!doctype html><html lang=\"en\"><head><meta charset=\"utf-8\"><meta name=\"viewport\" content=\"width=device-width,initial-scale=1,shrink-to-fit=no\"><meta name=\"theme-color\" content=\"#ffffff\"><meta name=\"ap",
+   "http_status": 200
+  },
+  "https://explorer.testnet.postfiat.org/health": {
+   "body_head": "<!doctype html><html lang=\"en\"><head><meta charset=\"utf-8\"><meta name=\"viewport\" content=\"width=device-width,initial-scale=1,shrink-to-fit=no\"><meta name=\"theme-color\" content=\"#ffffff\"><meta name=\"ap",
+   "http_status": 200
+  }
+ },
+ "fabricated_bridge_ledger_entry": {
+  "error": "entryNotFound",
+  "error_code": 98
+ },
+ "feature_enabled": 64,
+ "feature_entries": 101,
+ "genesis_account": {
+  "account": "r4vhrMChCsaoFsBoCkRTRGUuc1njfr7bmA",
+  "balance_drops": "96999999999999880",
+  "exists": true,
+  "flags": 0,
+  "sequence": 13
+ },
+ "genesis_account_objects": {
+  "count": 0,
+  "ledger_index": 8287774,
+  "types": {}
+ },
+ "hostid": "MUFF",
+ "io_latency_ms": 1,
+ "ledger_current_index": 8287772,
+ "load_factor": 1,
+ "network_id": 2025,
+ "peer_disconnects": "103",
+ "peers": 21,
+ "pfusdc_page": {
+  "bytes": 68866,
+  "http_status": 200,
+  "sha256": "d3c0bcb7c6b751ea094a0fc59a8dccfd97fd6c5b3508072900ec1911927b1e8c"
+ },
+ "probed_at_utc": "2026-11-23T03:32:08Z",
+ "rpc_calls": 17,
+ "rpc_endpoint": "https://rpc.testnet.postfiat.org/",
+ "server_state": "full",
+ "validated_ledger_age": 3,
+ "validated_ledger_seq": 8287770,
+ "validation_quorum": 17,
+ "validator_list": {
+  "blob_bytes_decoded": 10652,
+  "blob_effective": 848261408,
+  "blob_expiration": 891447293,
+  "blob_sequence": 30,
+  "bytes": 14781,
+  "format": "v2 (blobs_v2)",
+  "http_status": 200,
+  "manifest_chars": 288,
+  "publisher_key": "ED3F1E0DA736FCF99BE2880A60DBD470715C0E04DD793FB862236B070571FC09E2",
+  "signature_chars": 140,
+  "validators_in_blob": 25
+ },
+ "vhs_amendments_info": {
+  "XChainBridge": {
+   "deprecated": false,
+   "id": "C98D98EE9616ACD36E81FDEB8D41D349BF5F1B41DD64A0ABC1FE9AA5EA267E9C"
+  },
+  "bytes": 14554,
+  "count": 103,
+  "fixXChainRewardRounding": {
+   "deprecated": false,
+   "id": "2BF037D90E1B676B17592A8AF55E88DB465398B4B597AE46EECEE1399AB05699"
+  },
+  "http_status": 200
+ },
+ "xchain_amendments": {
+  "XChainBridge": {
+   "enabled": false,
+   "supported": true
+  },
+  "fixXChainRewardRounding": {
+   "enabled": false,
+   "supported": true
+  }
+ },
+ "xrpl_root_account": {
+  "account": "r9cZA1mLK5R5Am25ArfXFmqgNwjZgnfk59",
+  "error": "actNotFound",
+  "error_code": 19,
+  "exists": false
+ }
+}

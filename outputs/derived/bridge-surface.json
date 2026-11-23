@@ -1,0 +1,18 @@
+{
+ "amendment_gate": "XChainBridge disabled live; all 8 XChain tx types return temDISABLED (Transactor.h 409-425)",
+ "bridges_on_ledger": "none observed: fabricated bridge ledger_entry -> entryNotFound; genesis owns 0 objects",
+ "genesis_account": {
+  "account": "r4vhrMChCsaoFsBoCkRTRGUuc1njfr7bmA",
+  "balance_drops": "96999999999999880",
+  "exists": true,
+  "flags": 0,
+  "sequence": 13
+ },
+ "pfusdc_direction": "project's published bridge is pfUSDC, proof-based (SP1 zkVM), not the committee XChain \u2014 postfiat.org/pfusdc-trustless-bridge/ (HTTP 200, fetched by the probe)",
+ "xrpl_root_account": {
+  "account": "r9cZA1mLK5R5Am25ArfXFmqgNwjZgnfk59",
+  "error": "actNotFound",
+  "error_code": 19,
+  "exists": false
+ }
+}

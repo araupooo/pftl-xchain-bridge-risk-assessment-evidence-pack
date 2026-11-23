@@ -1,0 +1,126 @@
+{
+ "checks": [
+  {
+   "detail": "build_version=1.0.9",
+   "name": "build version is 1.0.9",
+   "pass": true
+  },
+  {
+   "detail": "network_id=2025",
+   "name": "network id is 2025",
+   "pass": true
+  },
+  {
+   "detail": "validated_ledger_seq=8287770",
+   "name": "validated ledger advanced past 8,287,000",
+   "pass": true
+  },
+  {
+   "detail": "complete_ledgers=8200054-8287770",
+   "name": "complete-ledgers floor is 8200054",
+   "pass": true
+  },
+  {
+   "detail": "cadence={'elapsed_seconds': 61.2, 'end_seq': 8287798, 'ledgers': 20, 'seconds_per_ledger': 3.059, 'start_seq': 8287778}",
+   "name": "cadence near 3 s/ledger",
+   "pass": true
+  },
+  {
+   "detail": "quorum=17",
+   "name": "validation quorum is 17",
+   "pass": true
+  },
+  {
+   "detail": "peers=21",
+   "name": "peers is 21",
+   "pass": true
+  },
+  {
+   "detail": "XChainBridge={'enabled': False, 'supported': True}",
+   "name": "XChainBridge amendment is DISABLED live",
+   "pass": true
+  },
+  {
+   "detail": "fixXChainRewardRounding={'enabled': False, 'supported': True}",
+   "name": "fixXChainRewardRounding amendment is DISABLED live",
+   "pass": true
+  },
+  {
+   "detail": "entries=101 enabled=64",
+   "name": "amendment table has 101 entries, 64 enabled",
+   "pass": true
+  },
+  {
+   "detail": "exists=True flags=0 balance_drops=96999999999999880",
+   "name": "PFTL genesis account exists with flags 0",
+   "pass": true
+  },
+  {
+   "detail": "balance_drops=96999999999999880",
+   "name": "genesis balance is 96,999,999,999,999,880 drops",
+   "pass": true
+  },
+  {
+   "detail": "error=actNotFound code=19",
+   "name": "masterpassphrase root account does NOT exist live",
+   "pass": true
+  },
+  {
+   "detail": "objects={'count': 0, 'ledger_index': 8287774, 'types': {}}",
+   "name": "genesis account owns zero ledger objects",
+   "pass": true
+  },
+  {
+   "detail": "{'error': 'entryNotFound', 'error_code': 98}",
+   "name": "fabricated bridge ledger_entry returns entryNotFound",
+   "pass": true
+  },
+  {
+   "detail": "blob_sequence=30",
+   "name": "validator-list blob sequence is 30",
+   "pass": true
+  },
+  {
+   "detail": "validators_in_blob=25",
+   "name": "validator-list blob holds 25 validators",
+   "pass": true
+  },
+  {
+   "detail": "24/24 PASS",
+   "name": "all drill cases pass",
+   "pass": true
+  },
+  {
+   "detail": "8 cases",
+   "name": "drill A has 8 cases, all PASS",
+   "pass": true
+  },
+  {
+   "detail": "8 cases with elapsed_ms",
+   "name": "drill A cases all carry elapsed_ms",
+   "pass": true
+  },
+  {
+   "detail": "7 cases",
+   "name": "drill B has 7 cases, all PASS",
+   "pass": true
+  },
+  {
+   "detail": "7 cases with elapsed_ms",
+   "name": "drill B cases all carry elapsed_ms",
+   "pass": true
+  },
+  {
+   "detail": "9 cases",
+   "name": "drill C has 9 cases, all PASS",
+   "pass": true
+  },
+  {
+   "detail": "9 cases with elapsed_ms",
+   "name": "drill C cases all carry elapsed_ms",
+   "pass": true
+  }
+ ],
+ "passed": 24,
+ "total": 24
+}

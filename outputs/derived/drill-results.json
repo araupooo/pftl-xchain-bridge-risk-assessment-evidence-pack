@@ -1,0 +1,190 @@
+{
+ "drills": {
+  "A": {
+   "cases": [
+    {
+     "detail": "weight 0 < quorum 5 -> tecXCHAIN_CLAIM_NO_QUORUM",
+     "elapsed_ms": 0.01,
+     "id": "A-01",
+     "label": "single attestation, no quorum",
+     "status": "PASS"
+    },
+    {
+     "detail": "3 distinct signers, weight 2+2+1=5 >= quorum 5 -> quorum, 3 reward accounts",
+     "elapsed_ms": 0.05,
+     "id": "A-02",
+     "label": "three distinct signers reach quorum",
+     "status": "PASS"
+    },
+    {
+     "detail": "same signer attests twice -> still 1 entry, weight 2 < 5, no quorum",
+     "elapsed_ms": 0.03,
+     "id": "A-03",
+     "label": "replayed attestation does not double-count",
+     "status": "PASS"
+    },
+    {
+     "detail": "re-attestation with larger amount replaces old one (set stays 1), weight still 2",
+     "elapsed_ms": 0.02,
+     "id": "A-04",
+     "label": "re-attestation with larger amount replaces",
+     "status": "PASS"
+    },
+    {
+     "detail": "non-signer attestation rejected (tecNO_PERMISSION) and erased before quorum math",
+     "elapsed_ms": 0.01,
+     "id": "A-05",
+     "label": "non-signer attestation rejected and erased",
+     "status": "PASS"
+    },
+    {
+     "detail": "dst mismatch: excluded on add-attestation path, ignored on claim path",
+     "elapsed_ms": 0.04,
+     "id": "A-06",
+     "label": "destination checked on add, ignored on claim",
+     "status": "PASS"
+    },
+    {
+     "detail": "signer removed from list -> its attestation erased, weight 4 < 5, no quorum",
+     "elapsed_ms": 0.02,
+     "id": "A-07",
+     "label": "removed signer attestation erased",
+     "status": "PASS"
+    },
+    {
+     "detail": "weighted quorum: 2+2=4 no quorum, +1 = 5 quorum",
+     "elapsed_ms": 0.03,
+     "id": "A-08",
+     "label": "weighted quorum boundary",
+     "status": "PASS"
+    }
+   ],
+   "wall_ms": 0.33
+  },
+  "B": {
+   "cases": [
+    {
+     "detail": "0 attestations -> tecXCHAIN_CLAIM_NO_QUORUM",
+     "elapsed_ms": 0.0,
+     "id": "B-01",
+     "label": "empty attestation set",
+     "status": "PASS"
+    },
+    {
+     "detail": "weight 4 = quorum-1 -> no quorum",
+     "elapsed_ms": 0.02,
+     "id": "B-02",
+     "label": "weight one below quorum",
+     "status": "PASS"
+    },
+    {
+     "detail": "weight exactly 5 = quorum -> quorum (weight >= quorum)",
+     "elapsed_ms": 0.02,
+     "id": "B-03",
+     "label": "weight exactly quorum",
+     "status": "PASS"
+    },
+    {
+     "detail": "weight 9 > quorum 5 -> quorum, reward accounts = the 3 attesters",
+     "elapsed_ms": 0.03,
+     "id": "B-04",
+     "label": "weight above quorum, rewards listed",
+     "status": "PASS"
+    },
+    {
+     "detail": "attestations for 1,000,000 do not match a claim for 2,000,000 -> no quorum",
+     "elapsed_ms": 0.02,
+     "id": "B-05",
+     "label": "amount mismatch blocks claim",
+     "status": "PASS"
+    },
+    {
+     "detail": "locking-send attestations do not match an issuing-send claim -> no quorum",
+     "elapsed_ms": 0.02,
+     "id": "B-06",
+     "label": "chain-direction mismatch blocks claim",
+     "status": "PASS"
+    },
+    {
+     "detail": "claim ids advance 1,2,3; counter at 2^32-1 wraps to 0 -> tecINTERNAL",
+     "elapsed_ms": 0.01,
+     "id": "B-07",
+     "label": "claim-id counter advances, overflow guarded",
+     "status": "PASS"
+    }
+   ],
+   "wall_ms": 0.17
+  },
+  "C": {
+   "cases": [
+    {
+     "detail": "equal door accounts -> temXCHAIN_EQUAL_DOOR_ACCOUNTS",
+     "elapsed_ms": 0.0,
+     "id": "C-01",
+     "label": "equal door accounts rejected",
+     "status": "PASS"
+    },
+    {
+     "detail": "submitter is neither door -> temXCHAIN_BRIDGE_NONDOOR_OWNER",
+     "elapsed_ms": 0.0,
+     "id": "C-02",
+     "label": "non-door submitter rejected",
+     "status": "PASS"
+    },
+    {
+     "detail": "locking XRP vs issuing IOU -> temXCHAIN_BRIDGE_BAD_ISSUES",
+     "elapsed_ms": 0.0,
+     "id": "C-03",
+     "label": "mixed XRP/IOU issues rejected",
+     "status": "PASS"
+    },
+    {
+     "detail": "negative reward and non-XRP reward -> temXCHAIN_BRIDGE_BAD_REWARD_AMOUNT",
+     "elapsed_ms": 0.0,
+     "id": "C-04",
+     "label": "bad signature reward rejected",
+     "status": "PASS"
+    },
+    {
+     "detail": "non-XRP and zero min-account-create amount -> temXCHAIN_BRIDGE_BAD_MIN_ACCOUNT_CREATE_AMOUNT",
+     "elapsed_ms": 0.0,
+     "id": "C-05",
+     "label": "bad min-account-create amount rejected",
+     "status": "PASS"
+    },
+    {
+     "detail": "XRP issuing door that is not the root account -> temXCHAIN_BRIDGE_BAD_ISSUES",
+     "elapsed_ms": 0.0,
+     "id": "C-06",
+     "label": "non-root XRP issuing door rejected",
+     "status": "PASS"
+    },
+    {
+     "detail": "locking door locking its own asset -> temXCHAIN_BRIDGE_BAD_ISSUES",
+     "elapsed_ms": 0.0,
+     "id": "C-07",
+     "label": "self-locking door rejected",
+     "status": "PASS"
+    },
+    {
+     "detail": "attestation with unknown public-key type -> temMALFORMED",
+     "elapsed_ms": 0.01,
+     "id": "C-08",
+     "label": "bad public-key type rejected",
+     "status": "PASS"
+    },
+    {
+     "detail": "zero amount, wrong issue, bad signature -> temXCHAIN_BAD_PROOF",
+     "elapsed_ms": 0.02,
+     "id": "C-09",
+     "label": "bad attestation proof rejected",
+     "status": "PASS"
+    }
+   ],
+   "wall_ms": 0.1
+  }
+ },
+ "total_cases": 24,
+ "total_pass": 24,
+ "total_wall_ms": 0.62
+}
